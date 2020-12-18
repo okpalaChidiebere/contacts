@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 
-class ListContacts extends Component {
+/*class ListContacts extends Component {
 
     //A prop is any input that you pass to a React component. Just like an HTML attribute, a prop name and value are added to the Component.
     //we can access a component's props with this.props (or props in stateless functional components).
@@ -31,6 +31,31 @@ class ListContacts extends Component {
             </ol>	      
         )
     }
+}*/
+
+function  ListContacts (props) {
+
+    return (
+        <ol className='contact-list'>
+            {props.contacts.map((contact) => (
+                <li key={contact.id} className='contact-list-item'>
+                    <div
+                    className='contact-avatar'
+                    style={{
+                        backgroundImage: `url(${contact.avatarURL})`
+                    }}
+                    ></div>
+                    <div className='contact-details'>
+                        <p>{contact.name}</p>
+                        <p>@{contact.handle}</p>
+                    </div>
+                    <button className='contact-remove'>
+                            Remove
+                    </button>
+                </li>
+            ))}
+        </ol>	
+    )
 }
 
 export default ListContacts
