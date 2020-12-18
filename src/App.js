@@ -93,7 +93,9 @@ const movies = {
 };
 
 
-const contacts = [
+//This variable lives outside of React. Any change to this variable willl not refelct in our UI
+//For use to be able to keep track of the vairable and its state, we have to move it inside the State property of react.
+/*const contacts = [
   {
     "id": "karen",
     "name": "Karen Isgrigg",
@@ -112,7 +114,7 @@ const contacts = [
     "handle": "tylermcginnis",
     "avatarURL": "http://localhost:5001/tyler.jpg"
   }
- ];
+ ];*/
 
 
 class App extends Component {
@@ -121,7 +123,7 @@ class App extends Component {
     //we also have a clean interface so that we can configure each components nicely like we did below by just giving then different 'props'
     return (
       <div>
-      <ListContacts contacts={contacts}/>
+      <ListContacts />
       <ListProfiles profiles={profiles} movies={movies} users={users}/>
       </div>
     )

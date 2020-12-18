@@ -1,7 +1,31 @@
 import React from 'react'
 
 
-/*class ListContacts extends Component {
+class ListContacts extends React.Component {
+
+    state = {
+        contacts : [ // contacts is the key we will use to acess this list which is the particular state
+            {
+              "id": "karen",
+              "name": "Karen Isgrigg",
+              "handle": "karen_isgrigg",
+              "avatarURL": "http://localhost:5001/karen.jpg"
+            },
+            {
+              "id": "richard",
+              "name": "Richard Kalehoff",
+              "handle": "richardkalehoff",
+              "avatarURL": "http://localhost:5001/richard.jpg"
+            },
+            {
+              "id": "tyler",
+              "name": "Tyler McGinnis",
+              "handle": "tylermcginnis",
+              "avatarURL": "http://localhost:5001/tyler.jpg"
+            }
+        ]
+    
+    }
 
     //A prop is any input that you pass to a React component. Just like an HTML attribute, a prop name and value are added to the Component.
     //we can access a component's props with this.props (or props in stateless functional components).
@@ -11,7 +35,7 @@ import React from 'react'
     render() {
         return (
             <ol className='contact-list'>
-                {this.props.contacts.map((contact) => (
+                {this.state.contacts.map((contact) => (
                 <li key={contact.id} className='contact-list-item'>
                     <div
                     className='contact-avatar'
@@ -31,9 +55,11 @@ import React from 'react'
             </ol>	      
         )
     }
-}*/
+}
 
-function  ListContacts (props) {
+//we switched back to class component for this because we had to mamage state for this component.
+//If we just had to just render this component without worying about updating the UI redndered by this component when the remove button is clicked, we would still use our function component
+/*function  ListContacts (props) {
 
     return (
         <ol className='contact-list'>
@@ -56,6 +82,6 @@ function  ListContacts (props) {
             ))}
         </ol>	
     )
-}
+}*/
 
 export default ListContacts
