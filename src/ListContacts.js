@@ -1,31 +1,8 @@
 import React from 'react'
 
 
-class ListContacts extends React.Component {
+/*class ListContacts extends React.Component {
 
-    state = {
-        contacts : [ // contacts is the key we will use to acess this list which is the particular state
-            {
-              "id": "karen",
-              "name": "Karen Isgrigg",
-              "handle": "karen_isgrigg",
-              "avatarURL": "http://localhost:5001/karen.jpg"
-            },
-            {
-              "id": "richard",
-              "name": "Richard Kalehoff",
-              "handle": "richardkalehoff",
-              "avatarURL": "http://localhost:5001/richard.jpg"
-            },
-            {
-              "id": "tyler",
-              "name": "Tyler McGinnis",
-              "handle": "tylermcginnis",
-              "avatarURL": "http://localhost:5001/tyler.jpg"
-            }
-        ]
-    
-    }
 
     //A prop is any input that you pass to a React component. Just like an HTML attribute, a prop name and value are added to the Component.
     //we can access a component's props with this.props (or props in stateless functional components).
@@ -55,11 +32,11 @@ class ListContacts extends React.Component {
             </ol>	      
         )
     }
-}
+}*/
 
 //we switched back to class component for this because we had to mamage state for this component.
 //If we just had to just render this component without worying about updating the UI redndered by this component when the remove button is clicked, we would still use our function component
-/*function  ListContacts (props) {
+function  ListContacts (props) {
 
     return (
         <ol className='contact-list'>
@@ -75,13 +52,13 @@ class ListContacts extends React.Component {
                         <p>{contact.name}</p>
                         <p>@{contact.handle}</p>
                     </div>
-                    <button className='contact-remove'>
+                    <button className='contact-remove' onClick={() => props.onDeleteContact(contact)}>
                             Remove
                     </button>
                 </li>
             ))}
         </ol>	
     )
-}*/
+}
 
 export default ListContacts

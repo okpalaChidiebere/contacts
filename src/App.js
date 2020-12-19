@@ -118,12 +118,70 @@ const movies = {
 
 
 class App extends Component {
+
+  //A State that is needed by multiple components needs to be lifted up to the closest common ancestor. In our case, App component is the closest ancestor to ListContacts
+  //so the state that keeps track of state for the UI for ListContnect is living inside App component
+  
+  /*A component's state can be defined at initialization. we did this by contacts={this.state.contacts}. It is advised that, you sont want to intialize a 
+  the state with props eg
+  this.state = {
+    user: props.user
+  }
+  This is an error-prone anti-pattern, since state will only be initialized with props when the component is first created. What happens when you initialize a
+  state with props is the current state will not change unless the component is "refreshed." Using props to produce a component's initial state also leads to 
+  duplication of data, deviating from a dependable "source of truth."
+  */
+  state = {
+    contacts : [ // contacts is the key we will use to acess this list which is the particular state
+        {
+          "id": "karen",
+          "name": "Karen Isgrigg",
+          "handle": "karen_isgrigg",
+          "avatarURL": "http://localhost:5001/karen.jpg"
+        },
+        {
+          "id": "richard",
+          "name": "Richard Kalehoff",
+          "handle": "richardkalehoff",
+          "avatarURL": "http://localhost:5001/richard.jpg"
+        },
+        {
+          "id": "tyler",
+          "name": "Tyler McGinnis",
+          "handle": "tylermcginnis",
+          "avatarURL": "http://localhost:5001/tyler.jpg"
+        }
+    ]
+
+}
+
+//A component can alter its own internal state.
+//This method is responsible for taking a specific contact and thendeleting that contact from the contact array. So this most live inside wherever the state is living. If we want another method that will add to this contact list, it will also live in this App Component etc... 
+//in Order to get the method down to the ListContacts component and hook it up to the button, we passed this method as prop to the component ListContacts( onDeleteContact={this.removeContact} ) that references the function that will set the state(), then we add an onClick listener to each of the contact the map at ListContacts that will call an function(using arrow function is more easy to look) that will call the function(props.onDeleteContacr) set as props
+removeContact = (contact) => {
+
+  //we used this when the new state does not depend on the previoudState
+  //so setState acceps an object as first argument
+  /*this.setState({
+    key: "tyler"
+  })*/
+
+  //We preferd this state because of we are updating the state based on the previousState which is passed in the argument(currentState). setState() accepsts a function with the previous sate as its first argument
+  //Our teacher uses this one at all times. But it is up to you
+  this.setState((currentState) => ({
+    //the result of the new contacts state will be the result of calling the filter function on the previous state property (currentState.contacts) that returns the new list with the contact.id filtered out that is passed into this function based on the position of delete button clicked
+    contacts: currentState.contacts.filter((c) => {
+      return c.id !== contact.id
+    })
+  }))
+}
+
   render() {	
     //easily reusing all the elements is the reason why we encapsulate many elements inside a componets!
     //we also have a clean interface so that we can configure each components nicely like we did below by just giving then different 'props'
     return (
       <div>
-      <ListContacts />
+      <ListContacts contacts={this.state.contacts} onDeleteContact={this.removeContact}/>
       <ListProfiles profiles={profiles} movies={movies} users={users}/>
       </div>
     )
