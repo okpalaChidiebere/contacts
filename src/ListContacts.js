@@ -28,6 +28,20 @@ class ListContacts extends React.Component {
 
     //Having a 'Unique key' arritbute on one of those key item, React is able to performably know which item in the list has changed rather than recreating the list everytime. In our case, the contact.id is unique
     render() {
+
+        /** A more nicer coding practise for variables in js by destructing. So we refrence this.state and ths.props once
+         * rather than all over the place in oue JSX
+         */
+        const { query } = this.state //Remember with class components you can initialize the component with a state directly rather than props
+        const { contacts, onDeleteContact } = this.props
+    
+        //this variable will become the what we will use to map the UI that is gotten from the new filtered contacts list. Remember we used the contacts from the props directly before we added this feature where the contact list depends on the value of the query property state 
+        const showingContacts = query === '' 
+          ? contacts //if the search field is empty, we leave the list as it is
+          : contacts.filter((c) => ( //when the list is not empty, we filter the list
+              c.name.toLowerCase().includes(query.toLowerCase())  //filter the list by  matchig the name of the users and the value in the input box eg 'ka' in the input box will match 'karen' and 'kalehof' in contact list
+        ))
+
         return (
             <div className='list-contacts'>
                 <div className='list-contacts-top'>
@@ -35,13 +49,12 @@ class ListContacts extends React.Component {
                         className='search-contacts'
                         type='text'
                         placeholder='Search Contacts'
-                        value={this.state.query}
+                        value={query}
                         onChange={(event) => this.updateQuery(event.target.value)}
                     />
                 </div>   
-                {JSON.stringify(this.state)}
                 <ol className='contact-list'>
-                {this.props.contacts.map((contact) => (
+                {showingContacts.map((contact) => (
                     <li key={contact.id} className='contact-list-item'>
                         <div
                         className='contact-avatar'
@@ -53,7 +66,7 @@ class ListContacts extends React.Component {
                             <p>{contact.name}</p>
                             <p>@{contact.handle}</p>
                         </div>
-                        <button className='contact-remove'>
+                        <button className='contact-remove' onClick={() => onDeleteContact(contact)}>
                             Remove
                         </button>
                     </li>
