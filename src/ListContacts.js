@@ -22,6 +22,12 @@ class ListContacts extends React.Component {
         }))
     }
 
+    //This methods resests the input field in the form
+    //This method is called when the user clicks the 'show all' button right below the search imput box
+    clearQuery = () => {
+        this.updateQuery('')
+    }
+
     //A prop is any input that you pass to a React component. Just like an HTML attribute, a prop name and value are added to the Component.
     //we can access a component's props with this.props (or props in stateless functional components).
 
@@ -52,7 +58,18 @@ class ListContacts extends React.Component {
                         value={query}
                         onChange={(event) => this.updateQuery(event.target.value)}
                     />
-                </div>   
+                </div>
+
+                { //the '&&' below is called a guard-up operator in JS. The code inside the () after the operator will only run if the condition written before the operator is true
+                //Show we show ths code when we have contacts filtered out is less than the actual contact length. Remember React is just JavaScript so you can weite intuitive logic too!
+                showingContacts.length !== contacts.length && (
+                <div className='showing-contacts'>
+                    <span>Now showing {showingContacts.length} of {contacts.length}</span>
+                    <button onClick={this.clearQuery}>Show all</button>
+                </div>
+                )}
+
+
                 <ol className='contact-list'>
                 {showingContacts.map((contact) => (
                     <li key={contact.id} className='contact-list-item'>

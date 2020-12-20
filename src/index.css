@@ -102,3 +102,15 @@ code {
   border: 0;
   outline: none;
 }
+
+.showing-contacts {
+  text-align: center;
+  margin: 20px 0;
+}
+.showing-contacts button {
+  color: blue;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+}
