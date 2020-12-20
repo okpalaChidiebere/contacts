@@ -3,6 +3,9 @@ import ListContacts from './ListContacts'
 import ListProfiles from './ListProfiles';
 
 
+//  ListContacts.propTypes //i write this code to check up the props that this component expect. I can do this for third party library components too!
+
+
 const profiles = [
   {
     id: 1,
