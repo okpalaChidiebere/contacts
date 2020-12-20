@@ -2,8 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-/*class ListContacts extends React.Component {
+class ListContacts extends React.Component {
 
+
+    static propTypes = {
+        contacts: PropTypes.array.isRequired,  //we specifiy this props is required
+        onDeleteContact: PropTypes.func.isRequired,
+    }
+
+    state = {
+        query: '',  //we will bind our input field to to whatever the value of a certain property of a state is
+    }
+
+    //THis function gets invoked whenever the onchnage event is triggerd on that input field
+    //This function will set set the new value of query property to new input value
+    updateQuery = (query) => { //the query argument will be passed event.target.value which is the value of the input field.
+        this.setState(() => ({
+          query: query.trim()
+        }))
+    }
 
     //A prop is any input that you pass to a React component. Just like an HTML attribute, a prop name and value are added to the Component.
     //we can access a component's props with this.props (or props in stateless functional components).
@@ -12,32 +29,44 @@ import PropTypes from 'prop-types'
     //Having a 'Unique key' arritbute on one of those key item, React is able to performably know which item in the list has changed rather than recreating the list everytime. In our case, the contact.id is unique
     render() {
         return (
-            <ol className='contact-list'>
-                {this.state.contacts.map((contact) => (
-                <li key={contact.id} className='contact-list-item'>
-                    <div
-                    className='contact-avatar'
-                    style={{
-                        backgroundImage: `url(${contact.avatarURL})`
-                    }}
-                    ></div>
-                    <div className='contact-details'>
-                        <p>{contact.name}</p>
-                        <p>@{contact.handle}</p>
-                    </div>
-                    <button className='contact-remove'>
+            <div className='list-contacts'>
+                <div className='list-contacts-top'>
+                    <input
+                        className='search-contacts'
+                        type='text'
+                        placeholder='Search Contacts'
+                        value={this.state.query}
+                        onChange={(event) => this.updateQuery(event.target.value)}
+                    />
+                </div>   
+                {JSON.stringify(this.state)}
+                <ol className='contact-list'>
+                {this.props.contacts.map((contact) => (
+                    <li key={contact.id} className='contact-list-item'>
+                        <div
+                        className='contact-avatar'
+                        style={{
+                            backgroundImage: `url(${contact.avatarURL})`
+                        }}
+                        ></div>
+                        <div className='contact-details'>
+                            <p>{contact.name}</p>
+                            <p>@{contact.handle}</p>
+                        </div>
+                        <button className='contact-remove'>
                             Remove
-                    </button>
-                </li>
-                ))}
-            </ol>	      
+                        </button>
+                    </li>
+                    ))}
+                </ol>	
+            </div>      
         )
     }
-}*/
+}
 
 //we switched back to class component for this because we had to mamage state for this component.
 //If we just had to just render this component without worying about updating the UI redndered by this component when the remove button is clicked, we would still use our function component
-function  ListContacts (props) {
+/*function  ListContacts (props) {
 
     return (
         <ol className='contact-list'>
@@ -60,7 +89,7 @@ function  ListContacts (props) {
             ))}
         </ol>	
     )
-}
+}*/
 
 /**
  * yarn add prop-types to install the library
@@ -82,9 +111,9 @@ function  ListContacts (props) {
  * 
  * This objects will reperesent all of the different props that can be passed to this ListContacts component 
  */
-ListContacts.propTypes = {
+/*ListContacts.propTypes = {
     contacts: PropTypes.array.isRequired,  //we specifiy this props is required
     onDeleteContact: PropTypes.func.isRequired,
-}
+}*/
 
 export default ListContacts
