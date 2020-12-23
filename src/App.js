@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ListContacts from './ListContacts'
 import ListProfiles from './ListProfiles';
+import * as ContactsAPI from './utils/ContactsAPI'
 
 
 //  ListContacts.propTypes //i write this code to check up the props that this component expect. I can do this for third party library components too!
@@ -136,6 +137,7 @@ class App extends Component {
   */
   state = {
     contacts : [ // contacts is the key we will use to acess this list which is the particular state
+        /* now we have an empty array. But
         {
           "id": "karen",
           "name": "Karen Isgrigg",
@@ -153,10 +155,19 @@ class App extends Component {
           "name": "Tyler McGinnis",
           "handle": "tylermcginnis",
           "avatarURL": "http://localhost:5001/tyler.jpg"
-        }
+        }*/
     ]
+  }
 
-}
+  //this gets called right after the DOM for this component is rendered. So we update the state in here. Updating the state causes a re-render in React automatically. So our Ui will show what we want
+  componentDidMount() {
+    ContactsAPI.getAll() //get the contacts from the server
+      .then((contacts) => {
+        this.setState(() => ({ //with the response gotten from the server, we update the local state
+          contacts //means contacts: contacts. so we wrote the shorthand version in js
+        }))
+      })
+  }
 
 //A component can alter its own internal state.
 //This method is responsible for taking a specific contact and thendeleting that contact from the contact array. So this most live inside wherever the state is living. If we want another method that will add to this contact list, it will also live in this App Component etc... 
@@ -177,6 +188,9 @@ removeContact = (contact) => {
       return c.id !== contact.id
     })
   }))
+
+  // We update our API also after updating our local state
+  ContactsAPI.remove(contact)
 }
 
   render() {	

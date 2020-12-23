@@ -81,7 +81,7 @@ class ListContacts extends React.Component {
                         ></div>
                         <div className='contact-details'>
                             <p>{contact.name}</p>
-                            <p>@{contact.handle}</p>
+                            <p>{contact.handle}</p>
                         </div>
                         <button className='contact-remove' onClick={() => onDeleteContact(contact)}>
                             Remove
