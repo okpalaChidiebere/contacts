@@ -201,7 +201,12 @@ removeContact = (contact) => {
     return (
       <div>
       {this.state.screen === 'list-contact' && (
-      <ListContacts contacts={this.state.contacts} onDeleteContact={this.removeContact}/>
+      <ListContacts contacts={this.state.contacts} onDeleteContact={this.removeContact}
+      onNavigate={() => {
+        this.setState(() => ({
+          screen: 'create'
+        }))
+      }}/>
       )}
       {this.state.screen === 'profiles' && (
       <ListProfiles profiles={profiles} movies={movies} users={users}/>

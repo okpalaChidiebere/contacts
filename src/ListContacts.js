@@ -39,7 +39,7 @@ class ListContacts extends React.Component {
          * rather than all over the place in oue JSX
          */
         const { query } = this.state //Remember with class components you can initialize the component with a state directly rather than props
-        const { contacts, onDeleteContact } = this.props
+        const { contacts, onDeleteContact, onNavigate } = this.props
     
         //this variable will become the what we will use to map the UI that is gotten from the new filtered contacts list. Remember we used the contacts from the props directly before we added this feature where the contact list depends on the value of the query property state 
         const showingContacts = query === '' 
@@ -58,6 +58,11 @@ class ListContacts extends React.Component {
                         value={query}
                         onChange={(event) => this.updateQuery(event.target.value)}
                     />
+                    <a
+                    href='#create'
+                    onClick={onNavigate}
+                    className='add-contact'
+                    >Add Contact</a>
                 </div>
 
                 { //the '&&' below is called a guard-up operator in JS. The code inside the () after the operator will only run if the condition written before the operator is true
