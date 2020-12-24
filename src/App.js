@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import ListContacts from './ListContacts'
 import ListProfiles from './ListProfiles';
 import * as ContactsAPI from './utils/ContactsAPI'
@@ -158,7 +159,7 @@ class App extends Component {
           "avatarURL": "http://localhost:5001/tyler.jpg"
         }*/
     ],
-    screen: 'list-contact',
+    //screen: 'list-contact',
   }
 
   //this gets called right after the DOM for this component is rendered. So we update the state in here. Updating the state causes a re-render in React automatically. So our Ui will show what we want
@@ -200,20 +201,33 @@ removeContact = (contact) => {
     //we also have a clean interface so that we can configure each components nicely like we did below by just giving then different 'props'
     return (
       <div>
-      {this.state.screen === 'list-contact' && (
+        <Route exact path='/' render={() => (
+          <ListContacts contacts={this.state.contacts} onDeleteContact={this.removeContact}/>
+        )}/>
+        <Route path='/profiles' render={() => (
+          <ListProfiles profiles={profiles} movies={movies} users={users}/>
+        )}/>
+        <Route path='/create' component={ /*another method for where we want to render just a component and not pass in custom props like we did for ListProfiles and ListContacts
+        so we use Router Component prop, if not we will use Router Render prop like we did for others*/
+        CreateContact
+        }/>
+      {/*
+      We replaced the code were we dyamically render the code based on state completely with the Route
+      component
+      this.state.screen === 'list-contact' && (
       <ListContacts contacts={this.state.contacts} onDeleteContact={this.removeContact}
       onNavigate={() => {
         this.setState(() => ({
           screen: 'create'
         }))
       }}/>
-      )}
-      {this.state.screen === 'profiles' && (
+      )*/}
+      {/*this.state.screen === 'profiles' && (
       <ListProfiles profiles={profiles} movies={movies} users={users}/>
-      )}
-      {this.state.screen === 'create' && (
+      )*/}
+      {/*this.state.screen === 'create' && (
           <CreateContact />
-      )}
+      )*/}
       </div>
     )
   }
