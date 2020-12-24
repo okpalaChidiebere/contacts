@@ -196,6 +196,15 @@ removeContact = (contact) => {
   ContactsAPI.remove(contact)
 }
 
+createContact = (contact) => {
+  ContactsAPI.create(contact)
+    .then((contact) => {
+      this.setState((currentState) => ({
+        contacts: currentState.contacts.concat([contact])
+      }))
+    })
+}
+
   render() {	
     //easily reusing all the elements is the reason why we encapsulate many elements inside a componets!
     //we also have a clean interface so that we can configure each components nicely like we did below by just giving then different 'props'
@@ -207,10 +216,15 @@ removeContact = (contact) => {
         <Route path='/profiles' render={() => (
           <ListProfiles profiles={profiles} movies={movies} users={users}/>
         )}/>
-        <Route path='/create' component={ /*another method for where we want to render just a component and not pass in custom props like we did for ListProfiles and ListContacts
-        so we use Router Component prop, if not we will use Router Render prop like we did for others*/
-        CreateContact
-        }/>
+        <Route path='/create' render={({ history }) => ( //we now use the Router Render prop because we are now passing a custom prop to our Component
+          <CreateContact 
+          onCreateContact={ /**One reason we did not pass just this.createContact inside as a prop is because we wanted to navigate back to the home screen of our React Router
+            So we had to use one of the prop that React gives us which is history that we destructed*/
+            (contact) => {
+              this.createContact(contact)
+              history.push('/') /*The will re-route us to our home view */}
+          }/>
+        )}/>
       {/*
       We replaced the code were we dyamically render the code based on state completely with the Route
       component
