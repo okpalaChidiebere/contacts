@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ListContacts from './ListContacts'
 import ListProfiles from './ListProfiles';
 import * as ContactsAPI from './utils/ContactsAPI'
+import CreateContact from './CreateContact'
 
 
 //  ListContacts.propTypes //i write this code to check up the props that this component expect. I can do this for third party library components too!
@@ -156,7 +157,8 @@ class App extends Component {
           "handle": "tylermcginnis",
           "avatarURL": "http://localhost:5001/tyler.jpg"
         }*/
-    ]
+    ],
+    screen: 'list-contact',
   }
 
   //this gets called right after the DOM for this component is rendered. So we update the state in here. Updating the state causes a re-render in React automatically. So our Ui will show what we want
@@ -198,8 +200,15 @@ removeContact = (contact) => {
     //we also have a clean interface so that we can configure each components nicely like we did below by just giving then different 'props'
     return (
       <div>
+      {this.state.screen === 'list-contact' && (
       <ListContacts contacts={this.state.contacts} onDeleteContact={this.removeContact}/>
+      )}
+      {this.state.screen === 'profiles' && (
       <ListProfiles profiles={profiles} movies={movies} users={users}/>
+      )}
+      {this.state.screen === 'create' && (
+          <CreateContact />
+      )}
       </div>
     )
   }
